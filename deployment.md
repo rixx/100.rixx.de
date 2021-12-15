@@ -2,6 +2,8 @@
 
 Create a user `hundo` (`useradd hundo -m`), clone this repository, `pip install --user -r src/requirements.txt`.
 
+Create a `config.json` in `src` with a `{"secret_key": "very secret"}`.
+
 Create a systemd service to run gunicorn at a port of your choice, at `/etc/systemd/system/hundo.service`:
 
 ```
@@ -20,7 +22,7 @@ Restart=on-failure
 WantedBy=multi-user.target
 ```
 
-And nginx:
+Start and enable the service. Conifgure nginx:
 
 ```
 server {
