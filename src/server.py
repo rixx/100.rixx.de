@@ -21,15 +21,28 @@ async def get_data():
     return json.loads(content)
 
 
-async def write_data(key, interval, reason, learned):
+async def write_to_file(data):
+    async with async_open(DATA_PATH, "w") as f:
+        await f.write(json.dumps(data))
+
+
+async def write_data(key, interval, reason, learned, name=None):
     if not DATA_PATH.exists():
         raise Exception("boo")
     data = await get_data()
+    if key not in data:
+        data[key] = {"name": name, "count": 0}
     data[key]["count"] += interval
     data[key]["reason"] = reason
     data[key]["learned"] = learned
-    async with async_open(DATA_PATH, "w") as f:
-        await f.write(json.dumps(data))
+    await write_to_file(data)
+    return data
+
+
+async def delete_data(key):
+    data = await get_data()
+    data.pop(key, None)
+    await write_to_file(data)
     return data
 
 
@@ -48,17 +61,21 @@ async def home_admin(request):
     if request.match_info.get("secret") == CONFIG["secret_key"]:
         admin = True
         data = await request.post()
-        interval = 0
-        if data.get("direction") == "up":
-            interval = 1
-        elif data.get("direction") == "down":
-            interval = -1
-        data = await write_data(
-            data["key"],
-            interval=interval,
-            reason=data["reason"],
-            learned=data["learned"],
-        )
+        if data.get("action") == "delete":
+            data = await delete_data(key=data["key"])
+        else:
+            interval = 0
+            if data.get("direction") == "up":
+                interval = 1
+            elif data.get("direction") == "down":
+                interval = -1
+            data = await write_data(
+                data["key"],
+                interval=interval,
+                reason=data["reason"],
+                learned=data["learned"],
+                name=data.get("name"),
+            )
     return {"data": data, "admin": admin}
 
 

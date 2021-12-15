@@ -49,7 +49,10 @@
           <div class="count">
             {% if admin %}<button name="direction" value="down" type="submit">-</button>{% endif %}
             <h2>{{ content.count }}</h2>
-            {% if admin %}<button name="direction" value="up" type="submit">+</button>{% endif %}
+            {% if admin %}
+              <button name="direction" value="up" type="submit">+</button>
+              <button name="action" value="delete">delete</button>
+            {% endif %}
           </div>
         </div>
         <details>
@@ -72,5 +75,26 @@
         </details>
       </form>
     {% endfor %}
+    {% if admin %}
+    <details>
+      <summary>create new thing</summary>
+      <form method="POST" class="thing-row">
+        <input type="text" name="key" value="json key">
+        <div class="thing">
+          <h2>100 <input name="name"></h2>
+          <div class="count">
+          </div>
+        </div>
+        <details>
+          <summary>Why?</summary>
+          <textarea name="reason"></textarea>
+        </details>
+        <details>
+          <summary>What have I learned?</summary>
+          <textarea name="learned"></textarea>
+        </details>
+        <button>Save</button>
+      </form>
+    {% endif %}
   </body>
 </html>
