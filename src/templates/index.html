@@ -1,17 +1,58 @@
-{% for key, content in data.items() %}
-    <form method="POST">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@rixxtr"/>
+    <meta name="twitter:title" content="I'm doing things 100 times"/>
+
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://100.rixx.de/">
+    <meta property="og:title" content="I'm doing things 100 times"/>
+
+    <link rel="canonical" content="https://100.rixx.de/">
+
+    <title>I'm doing things 100 times</title>
+
+    <style>
+      .thing-row { max-width: 800px; margin: auto; border-bottom: 1px solid #990000; padding-bottom: 12px }
+      .thing-row .thing { display: flex; justify-content: space-between; align-items: baseline;}
+      .thing-row .thing .count h2 { display: inline }
+    </style>
+  </head>
+  <body>
+    {% for key, content in data.items() %}
+      <form method="POST" class="thing-row">
         <input type="hidden" name="key" value="{{ key }}">
-        <div>
-            <h2>100 {{ content.name }}</h2>
-            <div class="count">
-                {% if admin %}<button name="direction" value="down" type="submit">-</button>{% endif %}
-                {{ content.count }}
-                {% if admin %}<button name="direction" value="up" type="submit">+</button>{% endif %}
-            </div>
-            
-            <details>
-                <summary>Why?</summary>
-                 <p>{{ content.reason }}</p>
-            </details>
-    </form>
-{% endfor %}
+        <div class="thing">
+          <h2>100 {{ content.name }}</h2>
+          <div class="count">
+            {% if admin %}<button name="direction" value="down" type="submit">-</button>{% endif %}
+            <h2>{{ content.count }}</h2>
+            {% if admin %}<button name="direction" value="up" type="submit">+</button>{% endif %}
+          </div>
+        </div>
+        <details>
+          <summary>Why?</summary>
+          {% if admin %}
+            <textarea name="reason">{{ content.reason }}</textarea>
+            <button>Save</button>
+          {% else %}
+            <p>{{ content.reason }}</p>
+          {% endif %}
+        </details>
+        <details>
+          <summary>What have I learned?</summary>
+          {% if admin %}
+            <textarea name="learned">{{ content.learned }}</textarea>
+            <button>Save</button>
+          {% else %}
+            <p>{{ content.learned }}</p>
+          {% endif %}
+        </details>
+      </form>
+    {% endfor %}
+  </body>
+</html>
