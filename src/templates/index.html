@@ -35,7 +35,8 @@
       </details>
       <details>
         <summary>Notes</summary>
-        Doing a thing 100 times is secondary to doing something I want, so if doing a thing 10 times makes me realise that I'm not interested after all, I'll back out. The primary objective is to <b>fuck around and <i>stick it out long enough</i> to find out</b>.
+        Doing a thing 100 times is secondary to doing something I want, so if doing a thing 10 times makes me realise that I'm not interested after all, I'll back out.
+        The primary objective is to <b>fuck around and <i>stick it out long enough</i> to find out</b>.
       </details>
     </p>
     {% for key, content in data.items() %}
@@ -57,7 +58,7 @@
             <textarea name="reason">{{ content.reason }}</textarea>
             <button>Save</button>
           {% else %}
-            <p>{{ content.reason }}</p>
+            <p>{{ content.reason|safe }}</p>
           {% endif %}
         </details>
         <details>
@@ -66,7 +67,7 @@
             <textarea name="learned">{{ content.learned }}</textarea>
             <button>Save</button>
           {% else %}
-            <p>{{ content.learned }}</p>
+            <p>{{ content.learned|safe }}</p>
           {% endif %}
         </details>
       </form>
