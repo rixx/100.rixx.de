@@ -1,0 +1,4 @@
+aiohttp[speedups]
+aiohttp-jinja2
+jinja2
+aiofile

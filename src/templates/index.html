@@ -1,0 +1,17 @@
+{% for key, content in data.items() %}
+    <form method="POST">
+        <input type="hidden" name="key" value="{{ key }}">
+        <div>
+            <h2>100 {{ content.name }}</h2>
+            <div class="count">
+                {% if admin %}<button name="direction" value="down" type="submit">-</button>{% endif %}
+                {{ content.count }}
+                {% if admin %}<button name="direction" value="up" type="submit">+</button>{% endif %}
+            </div>
+            
+            <details>
+                <summary>Why?</summary>
+                 <p>{{ content.reason }}</p>
+            </details>
+    </form>
+{% endfor %}
