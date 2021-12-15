@@ -17,17 +17,34 @@
     <title>I'm doing things 100 times</title>
 
     <style>
-      .thing-row { max-width: 800px; margin: auto; border-bottom: 1px solid #990000; padding-bottom: 12px }
+      body { max-width: 800px; margin: auto; line-height: 1.8; font-family: sans-serif }
+      .thing-row { border-top: 1px solid #990000; padding-bottom: 12px }
       .thing-row .thing { display: flex; justify-content: space-between; align-items: baseline;}
       .thing-row .thing .count h2 { display: inline }
+      textarea { width: 80% }
+      details { margin-bottom: 12px }
+      details summary { cursor: pointer; margin-bottom: 12px; }
     </style>
   </head>
   <body>
+    <h1>I'm doing things 100 times</h1>
+    <p>
+      <details>
+        <summary>Why?</summary>
+        Sucking at something for a while leads to being good at something, with some caveats: I have to reflect on what I'm doing (hence the "What have I learned?" part), and I have to have enough variation in the crappiness to have something to learn from.
+      </details>
+      <details>
+        <summary>Notes</summary>
+        Doing a thing 100 times is secondary to doing something I want, so if doing a thing 10 times makes me realise that I'm not interested after all, I'll back out. The primary objective is to <b>fuck around and <i>stick it out long enough</i> to find out</b>.
+      </details>
+    </p>
     {% for key, content in data.items() %}
       <form method="POST" class="thing-row">
         <input type="hidden" name="key" value="{{ key }}">
         <div class="thing">
           <h2>100 {{ content.name }}</h2>
+          <p>
+          </p>
           <div class="count">
             {% if admin %}<button name="direction" value="down" type="submit">-</button>{% endif %}
             <h2>{{ content.count }}</h2>
