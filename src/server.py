@@ -62,11 +62,23 @@ async def home_admin(request):
     return {"data": data, "admin": admin}
 
 
-app = web.Application()
-setup(app, loader=FileSystemLoader(Path(__file__).parent / "templates"))
-app.add_routes(
-    [web.get("/", home), web.get("/{secret}", home), web.post("/{secret}", home_admin)]
-)
+def web_app_wrapper():
+    app = web.Application()
+    setup(app, loader=FileSystemLoader(Path(__file__).parent / "templates"))
+    app.add_routes(
+        [
+            web.get("/", home),
+            web.get("/{secret}", home),
+            web.post("/{secret}", home_admin),
+        ]
+    )
+    return app
+
+
+async def web_app():
+    return web_app_wrapper()
+
 
 if __name__ == "__main__":
+    app = web_app_wrapper()
     web.run_app(app)
